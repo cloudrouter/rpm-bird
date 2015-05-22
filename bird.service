@@ -6,7 +6,7 @@ After=network.target
 [Service]
 Type=forking
 ExecStart=/usr/sbin/BIRD_PROGNAME
-ExecReload=/bin/kill -HUP $MAINPID
+ExecReload=/usr/sbin/BIRD_PROGNAME -R
 
 [Install]
 WantedBy=multi-user.target
