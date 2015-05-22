@@ -2,7 +2,7 @@
 
 Summary: BIRD Internet Routing Daemon
 Name: bird
-Version: 1.4.5
+Version: 1.5.0
 Release: 1
 License: GPLv2+
 Group: System Environment/Daemons
@@ -75,6 +75,8 @@ sed 's/BIRD_PROGNAME/bird6/' %SOURCE1 > %{buildroot}%{_unitdir}/bird6.service
 %{_sbindir}/birdcl6
 
 %changelog
+* Fri May 22 2015 David Jorm <djorm@iix.net> - 1.5.0-1
+- Rebase on bird 1.5.0
 * Fri May 22 2015 David Jorm <djorm@iix.net> - 1.4.5-2
 - Update service file to use -R flag to reload bird process
 * Thu Feb 26 2015 David Jorm <djorm@iix.net> - 1.4.5-1
