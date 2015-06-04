@@ -9,7 +9,7 @@ Group: System Environment/Daemons
 Source0: ftp://bird.network.cz/pub/bird/bird-%{version}.tar.gz
 Source1: bird.service
 URL: http://bird.network.cz
-BuildRequires: flex bison ncurses-devel readline-devel sed systemd
+BuildRequires: gcc make flex bison ncurses-devel readline-devel sed systemd
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
