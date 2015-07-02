@@ -3,7 +3,7 @@
 Summary: BIRD Internet Routing Daemon
 Name: bird
 Version: 1.5.0
-Release: 1
+Release: 1%{?dist}
 License: GPLv2+
 Group: System Environment/Daemons
 Source0: ftp://bird.network.cz/pub/bird/bird-%{version}.tar.gz
@@ -75,6 +75,8 @@ sed 's/BIRD_PROGNAME/bird6/' %SOURCE1 > %{buildroot}%{_unitdir}/bird6.service
 %{_sbindir}/birdcl6
 
 %changelog
+* Thu Jul 02 2015 John Siegrist <jsiegrist@iix.net> - 1.5.0-1
+- Added dist macro to Release
 * Fri May 22 2015 David Jorm <djorm@iix.net> - 1.5.0-1
 - Rebase on bird 1.5.0
 * Fri May 22 2015 David Jorm <djorm@iix.net> - 1.4.5-2
