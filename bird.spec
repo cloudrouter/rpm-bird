@@ -3,13 +3,24 @@
 Summary: BIRD Internet Routing Daemon
 Name: bird
 Version: 1.5.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: GPLv2+
 Group: System Environment/Daemons
+URL: http://bird.network.cz
+
 Source0: ftp://bird.network.cz/pub/bird/bird-%{version}.tar.gz
 Source1: bird.service
-URL: http://bird.network.cz
-BuildRequires: gcc make flex bison ncurses-devel readline-devel sed systemd
+Source2: bird.sysconfig
+
+BuildRequires: gcc
+BuildRequires: make
+BuildRequires: flex
+BuildRequires: bison
+BuildRequires: ncurses-devel
+BuildRequires: readline-devel
+BuildRequires: sed
+BuildRequires: systemd
+
 Requires(post): systemd
 Requires(preun): systemd
 Requires(postun): systemd
@@ -19,7 +30,7 @@ BIRD is a dynamic routing daemon supporting IPv4 and IPv6 versions of the routin
 protocols BGP, RIP and OSPF.
 
 %prep
-%setup -q
+%autosetup
 
 %build
 %configure --prefix=%{_prefix} \
@@ -41,11 +52,14 @@ make install DESTDIR=%{buildroot}
 install bird6 %{buildroot}/usr/sbin
 install birdc6 %{buildroot}/usr/sbin
 install birdcl6 %{buildroot}/usr/sbin
+
+install doc/bird.conf.example %{buildroot}/etc/bird.conf
 install doc/bird.conf.example %{buildroot}/etc/bird6.conf
 
-install -d %{buildroot}%{_unitdir}
-sed 's/BIRD_PROGNAME/bird/' %SOURCE1 > %{buildroot}%{_unitdir}/bird.service
-sed 's/BIRD_PROGNAME/bird6/' %SOURCE1 > %{buildroot}%{_unitdir}/bird6.service
+install -D %{SOURCE1} %{buildroot}%{_unitdir}/bird.service
+install -D %{SOURCE1} %{buildroot}%{_unitdir}/bird6.service
+install -D -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/bird
+install -D -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/bird6
 
 %post
 %systemd_post bird.service
@@ -65,6 +79,8 @@ sed 's/BIRD_PROGNAME/bird6/' %SOURCE1 > %{buildroot}%{_unitdir}/bird6.service
 %doc doc/bird*.html
 %config(noreplace) %{_sysconfdir}/bird.conf
 %config(noreplace) %{_sysconfdir}/bird6.conf
+%config(noreplace) %{_sysconfdir}/sysconfig/bird
+%config(noreplace) %{_sysconfdir}/sysconfig/bird6
 %{_unitdir}/bird.service
 %{_sbindir}/bird
 %{_sbindir}/birdc
@@ -75,11 +91,21 @@ sed 's/BIRD_PROGNAME/bird6/' %SOURCE1 > %{buildroot}%{_unitdir}/bird6.service
 %{_sbindir}/birdcl6
 
 %changelog
+* Sat Jan 16 2016 Arun Babu Neelicattu <arun.neelicattu@gmail.com> - 1.5.0-2
+- Fix systemd unit to reload service correctly
+- Use unit name in systemd unit as an alternative to sed patching
+- Introduce use of environment file in systemd unit with empty defaults
+- Add missing default IPv4 config file
+- Clean up specfile
+
 * Thu Jul 02 2015 John Siegrist <jsiegrist@iix.net> - 1.5.0-1
 - Added dist macro to Release
+
 * Fri May 22 2015 David Jorm <djorm@iix.net> - 1.5.0-1
 - Rebase on bird 1.5.0
+
 * Fri May 22 2015 David Jorm <djorm@iix.net> - 1.4.5-2
 - Update service file to use -R flag to reload bird process
+
 * Thu Feb 26 2015 David Jorm <djorm@iix.net> - 1.4.5-1
 - Initial release
