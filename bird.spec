@@ -4,6 +4,7 @@ Summary: BIRD Internet Routing Daemon
 Name: bird
 Version: 1.5.0
 Release: 2%{?dist}
+Epoch: 1
 License: GPLv2+
 Group: System Environment/Daemons
 URL: http://bird.network.cz
