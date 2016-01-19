@@ -3,7 +3,7 @@
 Summary: BIRD Internet Routing Daemon
 Name: bird
 Version: 1.5.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2+
 Group: System Environment/Daemons
 URL: http://bird.network.cz
@@ -56,8 +56,9 @@ install birdcl6 %{buildroot}/usr/sbin
 install doc/bird.conf.example %{buildroot}/etc/bird.conf
 install doc/bird.conf.example %{buildroot}/etc/bird6.conf
 
-install -D %{SOURCE1} %{buildroot}%{_unitdir}/bird.service
-install -D %{SOURCE1} %{buildroot}%{_unitdir}/bird6.service
+sed 's/BIRD_PROGNAME/bird/' %{SOURCE1} > %{buildroot}%{_unitdir}/bird.service
+sed 's/BIRD_PROGNAME/bird6/' %{SOURCE1} > %{buildroot}%{_unitdir}/bird6.service
+
 install -D -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/bird
 install -D -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/bird6
 
@@ -91,6 +92,9 @@ install -D -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/bird6
 %{_sbindir}/birdcl6
 
 %changelog
+* Tue Jan 19 2016 Arun Babu Neelicattu <arun.neelicattu@gmail.com> - 1.5.0-3
+- systemd unit exec requires absolute path
+
 * Sat Jan 16 2016 Arun Babu Neelicattu <arun.neelicattu@gmail.com> - 1.5.0-2
 - Fix systemd unit to reload service correctly
 - Use unit name in systemd unit as an alternative to sed patching
