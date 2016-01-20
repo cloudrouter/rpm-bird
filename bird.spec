@@ -3,7 +3,7 @@
 Summary: BIRD Internet Routing Daemon
 Name: bird
 Version: 1.5.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 Epoch: 1
 License: GPLv2+
 Group: System Environment/Daemons
@@ -50,6 +50,12 @@ make %{?_smp_mflags}
 
 %install
 make install DESTDIR=%{buildroot}
+
+install -d %{buildroot}/usr/sbin
+install -d %{buildroot}/etc
+install -d %{buildroot}%{_unitdir}
+install -d %{buildroot}%{_sysconfdir}/sysconfig/
+
 install bird6 %{buildroot}/usr/sbin
 install birdc6 %{buildroot}/usr/sbin
 install birdcl6 %{buildroot}/usr/sbin
@@ -93,6 +99,9 @@ install -D -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/bird6
 %{_sbindir}/birdcl6
 
 %changelog
+* Wed Jan 20 2016 John Siegrist <john@complects.com> - 1.5.0-4
+- Added directory creation to the install process
+
 * Tue Jan 19 2016 Arun Babu Neelicattu <arun.neelicattu@gmail.com> - 1.5.0-3
 - systemd unit exec requires absolute path
 
@@ -103,7 +112,7 @@ install -D -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/bird6
 - Add missing default IPv4 config file
 - Clean up specfile
 
-* Thu Jul 02 2015 John Siegrist <jsiegrist@iix.net> - 1.5.0-1
+* Thu Jul 02 2015 John Siegrist <john@complects.com> - 1.5.0-1
 - Added dist macro to Release
 
 * Fri May 22 2015 David Jorm <djorm@iix.net> - 1.5.0-1
