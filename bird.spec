@@ -2,7 +2,7 @@
 
 Summary: BIRD Internet Routing Daemon
 Name: bird
-Version: 1.6.0
+Version: 1.6.2
 Release: 1%{?dist}
 Epoch: 1
 License: GPLv2+
@@ -99,6 +99,9 @@ install -D -m 644 %{SOURCE2} %{buildroot}%{_sysconfdir}/sysconfig/bird6
 %{_sbindir}/birdcl6
 
 %changelog
+* Fri Oct 14 2016 John Siegrist <john@complects.com> - 1.6.2-1
+- Update package to 1.6.2
+
 * Sat Apr 30 2016 David Jorm <djorm@iix.net> - 1.6.0-1
 - Rebase on bird 1.6.0
 
